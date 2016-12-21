@@ -19,5 +19,9 @@ TARGET_OTA_ASSERT_DEVICE := NX512J,nx512j
 VENDOR_PATH := device/nubia/nx512j
 include device/nubia/nx512j/board/*.mk
 
+# Properties
+TARGET_OTA_ASSERT_DEVICE := NX512J,nx512j
+TARGET_SYSTEM_PROP += $(VENDOR_PATH)/system.prop
+
 # Inherit from proprietary files
 -include vendor/nubia/nx512j/BoardConfigVendor.mk
