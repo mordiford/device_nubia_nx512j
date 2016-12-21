@@ -1,5 +1,4 @@
 # Copyright (C) 2016 The CyanogenMod Project
-# Copyright (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,10 +14,13 @@
 
 $(call inherit-product, device/nubia/nx512j/full_nx512j.mk)
 
-# Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+# Inherit some common AICP stuff.
+$(call inherit-product, vendor/aicp/configs/common.mk)
 
-PRODUCT_NAME := lineage_nx512j
+# Inherit telephony stuff
+$(call inherit-product, vendor/aicp/configs/telephony.mk)
+
+PRODUCT_NAME := aicp_nx512j
 BOARD_VENDOR := nubia
 PRODUCT_DEVICE := nx512j
 
@@ -28,3 +30,11 @@ TARGET_VENDOR_PRODUCT_NAME := NX512J
 TARGET_VENDOR_DEVICE_NAME := NX512J
 PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=NX512J PRODUCT_NAME=NX512J
 
+# AICP Device Maintainers
+PRODUCT_BUILD_PROP_OVERRIDES += \
+        DEVICE_MAINTAINERS="lindwurm (Unofficial)"
+
+# Boot animation
+TARGET_SCREEN_HEIGHT := 1920
+TARGET_SCREEN_WIDTH := 1080
+-include vendor/aicp/configs/bootanimation.mk
