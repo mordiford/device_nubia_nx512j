@@ -1,7 +1,7 @@
 # Camera
 PRODUCT_PACKAGES += \
     libmm-qcamera \
-    Snap
+    SnapdragonCamera
 
 # Permissions
 PRODUCT_COPY_FILES += \
