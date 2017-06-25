@@ -280,6 +280,9 @@ on boot
     chown system graphics /sys/class/graphics/fb0/mode
     chown system graphics /sys/class/graphics/fb0/modes
 
+    # Permissions required for power HAL
+    chown system system /sys/devices/system/cpu/cpu0/core_ctl/max_cpus
+
 on property:bluetooth.isEnabled=true
     write /sys/class/bluetooth/hci0/idle_timeout 7000
 
@@ -297,7 +300,8 @@ service irsc_util /system/bin/irsc_util "/etc/sec_config"
 service rmt_storage /system/bin/rmt_storage
     class core
     user root
-    group wakelock    
+    group wakelock
+    writepid /dev/cpuset/system-background/tasks
 
 service config_bt_addr /system/bin/btnvtool -O
     class core
@@ -336,6 +340,7 @@ service qmuxd /system/bin/qmuxd
     class main
     user root
     group radio audio bluetooth gps qcom_diag wakelock
+    writepid /dev/cpuset/system-background/tasks
 
 service msm_irqbalance /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
     class core
@@ -346,6 +351,7 @@ service msm_irqbalance /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqb
 service netmgrd /system/bin/netmgrd
     class main
     group system wakelock
+    writepid /dev/cpuset/system-background/tasks
 
 
 on property:ro.use_data_netmgrd=false
@@ -439,7 +445,7 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
-    writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuset/camera-daemon/tasks
 
 # Allow usb charging to be disabled peristently
 on property:persist.usb.chgdisabled=1
@@ -452,6 +458,7 @@ service qseecomd /system/bin/qseecomd
    class core
    user root
    group root
+   writepid /dev/cpuset/system-background/tasks
 
 service perfd /vendor/bin/perfd
    class main
@@ -464,11 +471,13 @@ service thermal-engine /vendor/bin/thermal-engine
    class main
    user root
    group root
+   writepid /dev/cpuset/system-background/tasks
 
 service time_daemon /system/bin/time_daemon
    class late_start
    user root
    group root
+   writepid /dev/cpuset/system-background/tasks
 
 service audiod /system/bin/audiod
    class late_start
